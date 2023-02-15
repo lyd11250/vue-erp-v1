@@ -51,7 +51,7 @@ export default defineConfig({
     host: '0.0.0.0',
     proxy: {
       '/api': {
-        target: 'http://localhost:8000',
+        target: 'https://lyd11250-super-spoon-w4p4j9xv9j7h9gr6-8000.preview.app.github.dev',
         changeOrigin: true,
         rewrite: path => path.replace(/^\/api/, '')
       }
