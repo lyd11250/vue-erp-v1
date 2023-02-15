@@ -48,3 +48,9 @@ export interface Goods {
     goodsImg?: string
     goodsStatus?: number
 }
+
+export interface GoodsSupplierRel {
+    goodsId?: number
+    supplierId?: number
+    supplyPrice?: number
+}

@@ -2,18 +2,26 @@
     <div class="content">
         <div class="row">
             <div class="col">
+                <el-input v-model="searchId" placeholder="通过ID搜索" @keyup.enter="getList">
+                    <template #append>
+                        <el-button :icon="Search" @click="getList('id')" />
+                    </template>
+                </el-input>
+            </div>
+
+            <div class="col">
                 <el-input v-model="searchName" placeholder="通过名称搜索" @keyup.enter="getList">
                     <template #append>
-                        <el-button :icon="Search" @click="getList" />
+                        <el-button :icon="Search" @click="getList('name')" />
                     </template>
                 </el-input>
             </div>
         </div>
         <div class="row">
-            <el-button type="primary" :icon="Plus" @click="dialogRef.showDialog()">新增商品</el-button>
+            <el-button type="primary" :icon="Plus" @click="goodsDialogRef.showDialog()">新增商品</el-button>
         </div>
         <el-table class="table" v-if="data.length > 0" :data="data" :border="true" v-loading="loading"
-            :header-cell-style="{ backgroundColor: 'var(--el-border-color-extra-light)' }">
+            :header-cell-style="{ backgroundColor: 'var(--el-border-color-extra-light)' }" :cell-style="setRowStyle">
             <el-table-column prop="goodsId" label="ID" align="center" />
             <el-table-column label="图片" align="center">
                 <template #default="scope">
@@ -25,42 +33,63 @@
             <el-table-column prop="goodsName" label="名称" align="center" />
             <el-table-column prop="goodsDesc" label="描述" align="center" />
             <el-table-column prop="goodsUnit" label="单位" align="center" />
-            <el-table-column prop="goodsStatus" label="状态" align="center" />
             <el-table-column label="操作" align="center">
                 <template #default="scope">
                     <div style="display: flex;align-items: center;justify-content: center;">
-                        <el-button type="primary" @click="dialogRef.showDialog(scope.row)">修改</el-button>
+                        <el-button type="primary" @click="goodsDialogRef.showDialog(scope.row)">修改</el-button>
+                        <el-button type="primary" plain
+                            @click="goodsSupplierDialogRef.showDialog(scope.row)">选择供应商</el-button>
                     </div>
                 </template>
             </el-table-column>
         </el-table>
     </div>
-    <goods-dialog ref="dialogRef" @success="getList" />
+    <goods-dialog ref="goodsDialogRef" @success="getList" />
+    <goods-supplier-dialog ref="goodsSupplierDialogRef" />
 </template>
 
 <script lang="ts" setup>
-import { rCode, getGoodsList } from '@/api'
+import { rCode, getGoodsList, getGoodsById } from '@/api'
 import type { Goods } from '@/types'
-import { ref, onMounted, computed } from 'vue'
+import { ref } from 'vue'
 import { Plus, Search } from '@element-plus/icons-vue'
-import { ElMessageBox, ElMessage } from 'element-plus'
 import { completeImagePath } from '@/utils'
 import GoodsDialog from './components/GoodsDialog.vue'
+import GoodsSupplierDialog from './components/GoodsSupplierDialog.vue'
+import { ElMessage } from 'element-plus'
 
 const loading = ref(false)
-const dialogRef = ref()
+const goodsDialogRef = ref()
+const goodsSupplierDialogRef = ref()
 const searchName = ref<string>('')
+const searchId = ref<number>()
 const data = ref<Goods[]>([])
 
 
-const getList = async () => {
+const getList = async (search: 'id' | 'name') => {
     loading.value = true
-    const res = await getGoodsList(searchName.value)
-    if (res.code === rCode.success) {
-        data.value = res.data.list
+    let res: any
+    if (search === 'id') {
+        if (!searchId.value) {
+            ElMessage.error('请输入商品ID')
+            return
+        }
+        res = await getGoodsById(searchId.value)
+        if (res.code === rCode.success) {
+            data.value = [res.data]
+        }
+    } else {
+        res = await getGoodsList(searchName.value)
+        if (res.code === rCode.success) {
+            data.value = res.data.list
+        }
     }
     loading.value = false
 }
+
+const setRowStyle = (cell: any) => ({
+    backgroundColor: cell.row.goodsStatus === 1 ? '' : 'var(--el-color-danger-light-9)'
+})
 
 
 </script>
