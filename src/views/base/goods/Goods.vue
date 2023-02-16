@@ -44,7 +44,7 @@
             </el-table-column>
         </el-table>
     </div>
-    <goods-dialog ref="goodsDialogRef" @success="getList" />
+    <goods-dialog ref="goodsDialogRef" />
     <goods-supplier-dialog ref="goodsSupplierDialogRef" />
 </template>
 

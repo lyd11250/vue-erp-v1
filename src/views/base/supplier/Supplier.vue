@@ -80,7 +80,9 @@ const getSupplierList = async () => {
     loading.value = true
     const res = await apiGetSupplierList()
     if (res.code === rCode.success) {
-        data.value = res.data.list
+        if (res.data.list) {
+            data.value = res.data.list
+        }
     }
     loading.value = false
 }
