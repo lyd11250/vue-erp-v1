@@ -12,6 +12,9 @@
                     <el-option v-for="i in units" :key="i" :label="i" :value="i" />
                 </el-select>
             </el-form-item>
+            <el-form-item label="商品售价">
+                <el-input v-model="formData.goodsPrice" />
+            </el-form-item>
             <el-form-item label="商品状态">
                 <el-switch v-model="formData.goodsStatus" :active-value="1" :inactive-value="0" />
             </el-form-item>
@@ -23,7 +26,7 @@
             <el-button @click="dialogVisible = false">取消</el-button>
             <el-button type="primary" @click="submit">确认</el-button>
         </template>
-    </el-dialog>
+</el-dialog>
 </template>
 
 <script lang="ts" setup>
@@ -69,7 +72,7 @@ const submit = async () => {
     if (res.code === rCode.success) {
         ElMessage.success(`${dialogTitle.value}成功！`)
         dialogVisible.value = false
-        emits('success')
+        emits('success', res.data.goodsId)
         formData.value = {}
     }
 }
@@ -82,6 +85,4 @@ defineExpose({ showDialog })
 
 </script>
 
-<style lang="less" scoped>
-
-</style>
+<style lang="less" scoped></style>

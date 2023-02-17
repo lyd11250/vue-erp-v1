@@ -45,6 +45,7 @@ export interface Goods {
     goodsName?: string
     goodsDesc?: string
     goodsUnit?: string
+    goodsPrice?: number
     goodsImg?: string
     goodsStatus?: number
 }
@@ -53,4 +54,10 @@ export interface GoodsSupplierRel {
     goodsId?: number
     supplierId?: number
     supplyPrice?: number
+}
+
+export interface Inventory {
+    goodsId?: number
+    goodsCost?: number
+    quantity?: number
 }

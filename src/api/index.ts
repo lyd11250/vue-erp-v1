@@ -1,4 +1,4 @@
-import type { Access, Role, Supplier, Customer, User, Goods, GoodsSupplierRel } from "@/types"
+import type { Access, Role, Supplier, Customer, User, Goods, GoodsSupplierRel, Inventory } from "@/types"
 import { post } from "./http"
 
 export const rCode = {
@@ -128,8 +128,8 @@ export function getGoodsById(goodsId: number) {
     return post('/goods/id', { goodsId })
 }
 
-export function getGoodsList(goodsName: string) {
-    return post('/goods/list', { goodsName })
+export function getGoodsByName(goodsName: string) {
+    return post('/goods/name', { goodsName })
 }
 
 export function addGoods(goods: Goods) {
@@ -154,4 +154,16 @@ export function updateGoodsSupplier(rel: GoodsSupplierRel) {
 
 export function deleteGoodsSupplier(goodsId: number, supplierId: number) {
     return post('/goods/supplier/delete', { goodsId, supplierId })
+}
+
+export function getGoodsInventory(goodsId: number) {
+    return post('/inventory/goods', { goodsId })
+}
+
+export function updateInventory(inventory: Inventory) {
+    return post('/inventory/update', inventory)
+}
+
+export function addInventory(inventory: Inventory) {
+    return post('/inventory/add', inventory)
 }

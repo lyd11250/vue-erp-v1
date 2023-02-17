@@ -8,8 +8,7 @@
             <el-col :span="8">
                 <el-select v-model="form.data.supplierId" :disabled="form.action == 'update'" placeholder="选择或输入供应商"
                     filterable>
-                    <el-option v-for="i in suppliers" :key="i.supplierId" :label="i.supplierName"
-                        :value="i.supplierId" />
+                    <el-option v-for="i in suppliers" :key="i.supplierId" :label="i.supplierName" :value="i.supplierId" />
                 </el-select>
             </el-col>
             <el-col :span="8">
@@ -39,7 +38,7 @@
                 </template>
             </el-table-column>
         </el-table>
-    </el-dialog>
+</el-dialog>
 </template>
 
 <script lang="ts" setup>
@@ -102,6 +101,7 @@ const cancle = () => {
             goodsId: currentGoods.value?.goodsId
         }
     }
+    goodsSuppliers.value = []
 }
 
 const handleDelete = async (row: { supplierId: number, supplyPrice: number }) => {

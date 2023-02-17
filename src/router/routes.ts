@@ -22,7 +22,22 @@ const routes: RouteRecordRaw[] = [
                     title: '采购管理',
                     icon: markRaw(ShoppingCart)
                 },
-                children: []
+                children: [
+                    {
+                        path: '/purchase/purchase',
+                        meta: {
+                            title: '采购入库',
+                        },
+                        component: () => import('@/views/purchase/purchase/Purchase.vue')
+                    },
+                    {
+                        path: '/purchase/return',
+                        meta: {
+                            title: '采购退货',
+                        },
+                        component: () => import('@/views/purchase/return/Return.vue')
+                    },
+                ]
             },
             {
                 path: '/sale',
@@ -30,7 +45,22 @@ const routes: RouteRecordRaw[] = [
                     title: '销售管理',
                     icon: markRaw(Sell)
                 },
-                children: []
+                children: [
+                    {
+                        path: '/sale/sale',
+                        meta: {
+                            title: '销售出库',
+                        },
+                        component: () => import('@/views/sale/sale/Sale.vue')
+                    },
+                    {
+                        path: '/sale/return',
+                        meta: {
+                            title: '销售退货',
+                        },
+                        component: () => import('@/views/sale/return/Return.vue')
+                    },
+                ]
             },
             {
                 path: '/stock',
@@ -38,7 +68,39 @@ const routes: RouteRecordRaw[] = [
                     title: '库存管理',
                     icon: markRaw(TakeawayBox)
                 },
-                children: []
+                children: [
+                    {
+                        path: '/stock/current',
+                        meta: {
+                            title: '当前库存',
+                        },
+                        component: () => import('@/views/stock/current/Current.vue')
+                    },
+                    {
+                        // 报损
+                        path: '/stock/loss',
+                        meta: {
+                            title: '商品报损',
+                        },
+                        component: () => import('@/views/stock/loss/Loss.vue')
+                    },
+                    {
+                        // 报溢
+                        path: '/stock/excess',
+                        meta: {
+                            title: '商品报溢',
+                        },
+                        component: () => import('@/views/stock/excess/Excess.vue')
+                    },
+                    {
+                        // 库存警报
+                        path: '/stock/warning',
+                        meta: {
+                            title: '库存警报',
+                        },
+                        component: () => import('@/views/stock/warning/Warning.vue')
+                    },
+                ]
             },
             {
                 path: '/base',
@@ -67,6 +129,13 @@ const routes: RouteRecordRaw[] = [
                             title: '客户信息'
                         },
                         component: () => import('@/views/base/customer/Customer.vue')
+                    },
+                    {
+                        path: '/base/initial',
+                        meta: {
+                            title: '期初库存管理'
+                        },
+                        component: () => import('@/views/base/initial/Initial.vue')
                     },
                 ]
             },
